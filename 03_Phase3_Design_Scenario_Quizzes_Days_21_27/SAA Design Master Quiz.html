@@ -1580,7 +1580,161 @@
     }
     body.focus-mode #focus-key-hint { display: block; }
 
-    </style>
+    
+        /* Focus Mode Collapse Fix */
+        .focus-mode .section-header {
+            display: none !important;
+        }
+        .focus-mode .section-questions {
+            display: block !important;
+        }
+
+/* ====================================================
+   PEARSON VUE EXAM UI THEME (Overrides all defaults)
+   ==================================================== */
+:root {
+    --bg-color: #ffffff !important;
+    --card-bg: #ffffff !important;
+    --card-sub-bg: #ffffff !important;
+    --text-primary: #000000 !important;
+    --text-secondary: #000000 !important;
+    --border-color: transparent !important;
+}
+
+body, .container, .question-card {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
+}
+
+.question-card {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 0 40px 0 !important;
+    border-radius: 0 !important;
+    border-bottom: 1px solid #e0e0e0 !important;
+    margin-bottom: 30px !important;
+}
+
+/* Hide colorful badges */
+.badge-topic, .badge-subtopic, .badge-type {
+    display: none !important;
+}
+
+/* Format index badge as 'Question X' if possible */
+.badge-index {
+    background: transparent !important;
+    color: #000000 !important;
+    font-weight: bold !important;
+    font-size: 1.1rem !important;
+    padding: 0 !important;
+    border: none !important;
+    margin-bottom: 10px !important;
+    display: block !important;
+}
+
+.card-top-bar {
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 10px !important;
+}
+
+.question-text, .question-title {
+    font-size: 1.05rem !important;
+    font-weight: normal !important;
+    color: #000000 !important;
+    margin-bottom: 20px !important;
+    line-height: 1.5 !important;
+}
+
+/* Strip complex option styling */
+.option-label {
+    background: transparent !important;
+    border: none !important;
+    padding: 4px 0 !important;
+    margin-bottom: 8px !important;
+    gap: 12px !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    border-radius: 0 !important;
+}
+
+.option-label:hover {
+    background: transparent !important;
+    border: none !important;
+}
+
+/* Restore native radio/checkbox look */
+.option-label input[type="radio"], .option-label input[type="checkbox"] {
+    appearance: auto !important;
+    -webkit-appearance: auto !important;
+    width: 16px !important;
+    height: 16px !important;
+    margin-top: 3px !important;
+    accent-color: #0073bb !important;
+    cursor: pointer !important;
+}
+
+.opt-text, .option-item span {
+    font-size: 1rem !important;
+    color: #000000 !important;
+    font-weight: normal !important;
+}
+
+/* Submit button */
+.btn-submit {
+    background-color: #0073bb !important;
+    color: #ffffff !important;
+    border-radius: 2px !important;
+    border: none !important;
+    font-weight: normal !important;
+    padding: 8px 16px !important;
+    box-shadow: none !important;
+    text-transform: none !important;
+}
+.btn-submit:hover {
+    background-color: #005f99 !important;
+}
+
+/* Header */
+.sticky-header {
+    background: #ffffff !important;
+    border-bottom: 2px solid #333333 !important;
+    box-shadow: none !important;
+}
+
+.brand-title h1 {
+    color: #000000 !important;
+}
+
+.stat-pill {
+    background: #f0f0f0 !important;
+    border: 1px solid #ccc !important;
+    color: #000000 !important;
+}
+
+/* Explanations */
+.explanation-box {
+    background: #f9f9f9 !important;
+    border: 1px solid #dddddd !important;
+    border-left: 4px solid #0073bb !important;
+    border-radius: 0 !important;
+    color: #000000 !important;
+    margin-top: 20px !important;
+}
+
+/* Lists */
+.options-group, .question-options {
+    list-style-type: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.option-item {
+    margin-bottom: 8px !important;
+}
+
+</style>
 </head>
 <body>
 
@@ -10392,6 +10546,7 @@ function loadQuizData(quizKeyOrData, customTitle, customDesc) {
         }
     }
 
+    questions.forEach((q, idx) => { q._uid = 'uid_' + idx; q._seq = idx + 1; });
     activeQuizData = questions;
 
     const titleEl = document.getElementById('quiz-intro-title') || document.getElementById('quiz-title');
@@ -10499,7 +10654,7 @@ function renderQuizGroupedBySection(questions) {
 
         const card = document.createElement('div');
         card.className = 'question-card';
-        card.id = `card-${q.id}`;
+        card.id = `card-${q._uid || q.id}`;
         card.setAttribute('data-id', q.id);
         card.setAttribute('data-type', q.type || 'single');
         card.setAttribute('data-status', 'unanswered');
@@ -10513,7 +10668,7 @@ function renderQuizGroupedBySection(questions) {
                 optionsHTML += `
                     <label class="option-label" onclick="handleOptionClick(this)">
                         <input type="${inputType}" name="q_${q.id}" value="${letter}">
-                        <span class="opt-text">${escapeHTML(opt)}</span>
+                        <span class="opt-text">${escapeHTML(opt.replace(/^[A-Z]\)\\s*/, ""))}</span>
                     </label>
                 `;
             });
@@ -10522,7 +10677,7 @@ function renderQuizGroupedBySection(questions) {
         card.innerHTML = `
             <div class="card-top-bar">
                 <div class="badge-group">
-                    <span class="badge badge-index">#${q.id}</span>
+                    <span class="badge badge-index">Question ${q._seq || q.id}</span>
                     <span class="badge badge-topic">${escapeHTML(q.topic || 'AWS')}</span>
                     <span class="badge badge-subtopic">${escapeHTML(q.subtopic || 'General')}</span>
                     <span class="badge badge-type ${q.type || 'single'}">${isMulti ? 'Multi-Select' : 'Single Choice'}</span>
@@ -10535,6 +10690,7 @@ function renderQuizGroupedBySection(questions) {
             </div>
 
             <div class="question-text">
+                <div style="font-size: 0.85rem; color: #666; margin-bottom: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">Domain: ${escapeHTML(q.topic || 'AWS')}</div>
                 ${escapeHTML(q.q || q.question || "")}
                 ${isMulti ? `<span class="helper-text">(Select ${reqCount} options)</span>` : ''}
             </div>
@@ -11981,7 +12137,7 @@ function generate65QuestionMockExam() {
                 optionsHTML += `
                     <label class="option-label ${isChecked ? 'selected-opt' : ''}" onclick="handleExamOptionClick(this, '${q.id}', '${letter}', ${isMulti}, ${reqCount})">
                         <input type="${inputType}" name="exam_q_${q.id}" value="${letter}" ${isChecked ? 'checked' : ''}>
-                        <span class="opt-text">${escapeHTML(opt)}</span>
+                        <span class="opt-text">${escapeHTML(opt.replace(/^[A-Z]\)\\s*/, ""))}</span>
                     </label>
                 `;
             });
@@ -12002,7 +12158,8 @@ function generate65QuestionMockExam() {
                 </div>
 
                 <div class="question-text">
-                    ${escapeHTML(q.q || q.question || "")}
+                    <div style="font-size: 0.85rem; color: #666; margin-bottom: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">Domain: ${escapeHTML(q.topic || 'AWS')}</div>
+                ${escapeHTML(q.q || q.question || "")}
                     ${isMulti ? `<span class="helper-text">(Select ${reqCount} options)</span>` : ''}
                 </div>
 
@@ -12379,7 +12536,7 @@ function generate65QuestionMockExam() {
         let correctCount = 0, incorrectCount = 0;
 
         activeQuizData.forEach((q, idx) => {
-            const card = document.getElementById('card-' + q.id);
+            const card = document.getElementById('card-' + (q._uid || q.id));
             const status = card ? (card.getAttribute('data-status') || 'unanswered') : 'unanswered';
 
             if (status === 'correct') correctCount++;
@@ -12387,10 +12544,10 @@ function generate65QuestionMockExam() {
 
             const btn = document.createElement('button');
             btn.className = 'nav-q-btn status-' + status;
-            btn.title = 'Q#' + q.id + ' — ' + (q.q || q.question || '').substring(0, 60) + '...';
-            btn.textContent = q.id;
+            btn.title = 'Q#' + (idx + 1) + ' — ' + (q.q || q.question || '').substring(0, 60) + '...';
+            btn.textContent = idx + 1;
             btn.onclick = function() {
-                const target = document.getElementById('card-' + q.id);
+                const target = document.getElementById('card-' + (q._uid || q.id));
                 if (target) {
                     closePracticeNav();
                     setTimeout(() => {
@@ -12540,8 +12697,8 @@ function generate65QuestionMockExam() {
 
             // Show actual question ID in button; grid order reflects current sequence (random/first/last)
             html += `
-                <button class="nav-q-btn ${statusClass}" onclick="scrollToQuestion('${id}')" title="Q${id} — Position ${idx + 1} in current order">
-                    ${id}
+                <button class="nav-q-btn ${statusClass}" onclick="scrollToQuestion('${id}')" title="Q${idx + 1} — Position ${idx + 1} in current order">
+                    ${idx + 1}
                     ${isStarred ? '<span class="nav-star-dot">⭐</span>' : ''}
                 </button>
             `;
@@ -12620,9 +12777,7 @@ function generate65QuestionMockExam() {
             renderFocusCard();
         } else {
             // Remove focus-active class → all cards become visible again
-            document.querySelectorAll('.question-card.focus-active').forEach(function(c) {
-                c.classList.remove('focus-active');
-            });
+            document.querySelectorAll('.question-card').forEach(function(c) { c.classList.remove('focus-active'); c.style.removeProperty('display'); c.style.setProperty('display', 'none', 'important'); });
             // Scroll back to top cleanly
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -12636,7 +12791,7 @@ function generate65QuestionMockExam() {
 
     function _getFilteredData(data) {
         return (data || _getFocusData()).filter(function(q) {
-            var card = document.getElementById('card-' + q.id);
+            var card = document.getElementById('card-' + (q._uid || q.id));
             return card && !card.classList.contains('hidden');
         });
     }
@@ -12653,9 +12808,7 @@ function generate65QuestionMockExam() {
                 var el = document.getElementById(id);
                 if (el) el.textContent = '0';
             });
-            document.querySelectorAll('.question-card.focus-active').forEach(function(c) {
-                c.classList.remove('focus-active');
-            });
+            document.querySelectorAll('.question-card').forEach(function(c) { c.classList.remove('focus-active'); c.style.removeProperty('display'); c.style.setProperty('display', 'none', 'important'); });
             return;
         }
 
@@ -12664,15 +12817,13 @@ function generate65QuestionMockExam() {
         if (focusIndex < 0) focusIndex = 0;
 
         // Remove old active
-        document.querySelectorAll('.question-card.focus-active').forEach(function(c) {
-            c.classList.remove('focus-active');
-        });
+        document.querySelectorAll('.question-card').forEach(function(c) { c.classList.remove('focus-active'); c.style.removeProperty('display'); c.style.setProperty('display', 'none', 'important'); });
 
         // Activate current
         var q = filteredData[focusIndex];
-        var card = document.getElementById('card-' + q.id);
+        var card = document.getElementById('card-' + (q._uid || q.id));
         if (card) {
-            card.classList.add('focus-active');
+            card.classList.add('focus-active'); card.style.setProperty('display', 'block', 'important');
             // Scroll to top so user always starts reading from top of question
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -12718,16 +12869,21 @@ function generate65QuestionMockExam() {
     // Keyboard: Left/Right = navigate questions, Up/Down = navigate options, Enter = select & submit, Escape = exit focus
     document.addEventListener('keydown', function(e) {
         if (!focusMode) return;
-        if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
         
-        if (e.key === 'ArrowRight') { e.preventDefault(); focusNav(1); }
-        if (e.key === 'ArrowLeft')  { e.preventDefault(); focusNav(-1); }
+        // Let user type in inputs (like search)
+        if (e.target && (e.target.tagName === 'INPUT' && e.target.type === 'text') || e.target.tagName === 'TEXTAREA') return;
+        
+        if (e.key === 'ArrowRight') { e.preventDefault(); focusNav(1); return; }
+        if (e.key === 'ArrowLeft')  { e.preventDefault(); focusNav(-1); return; }
+        
+        var card = document.querySelector('.question-card.focus-active');
+        if (!card) return;
+        
+        var isMulti = card.getAttribute('data-type') === 'multi';
+        var options = Array.from(card.querySelectorAll('.option-label'));
         
         if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
             e.preventDefault();
-            var card = document.querySelector('.question-card.focus-active');
-            if (!card) return;
-            var options = Array.from(card.querySelectorAll('.option-label'));
             if (options.length === 0) return;
             
             var currentIndex = options.findIndex(o => o.classList.contains('keyboard-focus'));
@@ -12745,30 +12901,33 @@ function generate65QuestionMockExam() {
             
             options[nextIndex].classList.add('keyboard-focus');
             options[nextIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            
+            // Automatically select (tick) if it's a single choice question
+            if (!isMulti) {
+                var inp = options[nextIndex].querySelector('input');
+                if (inp && !inp.checked) {
+                    options[nextIndex].click();
+                }
+            }
+            return;
+        }
+        
+        if (e.key === ' ' && isMulti) {
+            // Space to toggle checkbox
+            e.preventDefault();
+            var focusedOption = card.querySelector('.option-label.keyboard-focus');
+            if (focusedOption) focusedOption.click();
+            return;
         }
         
         if (e.key === 'Enter') {
             e.preventDefault();
-            var card = document.querySelector('.question-card.focus-active');
-            if (!card) return;
-            
-            var focusedOption = card.querySelector('.option-label.keyboard-focus');
-            if (focusedOption) {
-                focusedOption.click();
-                var submitBtn = card.querySelector('.submit-btn');
-                if (submitBtn) {
-                    setTimeout(function() {
-                        var req = parseInt(card.getAttribute('data-req') || '1');
-                        var selectedCount = card.querySelectorAll('.option-label.selected-opt').length;
-                        if (selectedCount === req) {
-                            submitBtn.click();
-                        }
-                    }, 50);
-                }
-            } else {
-                var submitBtn = card.querySelector('.submit-btn');
-                if (submitBtn) submitBtn.click();
+            // Just submit!
+            var submitBtn = card.querySelector('.btn-submit') || card.querySelector('.submit-btn');
+            if (submitBtn) {
+                submitBtn.click();
             }
+            return;
         }
         
         if (e.key === 'Escape') { if (focusMode) toggleFocusMode(); }

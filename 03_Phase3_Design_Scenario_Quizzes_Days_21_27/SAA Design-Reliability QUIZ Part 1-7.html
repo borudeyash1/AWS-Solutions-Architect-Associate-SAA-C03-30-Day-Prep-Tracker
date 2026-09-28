@@ -1298,7 +1298,161 @@
     }
     body.focus-mode #focus-key-hint { display: block; }
 
-    </style>
+    
+        /* Focus Mode Collapse Fix */
+        .focus-mode .section-header {
+            display: none !important;
+        }
+        .focus-mode .section-questions {
+            display: block !important;
+        }
+
+/* ====================================================
+   PEARSON VUE EXAM UI THEME (Overrides all defaults)
+   ==================================================== */
+:root {
+    --bg-color: #ffffff !important;
+    --card-bg: #ffffff !important;
+    --card-sub-bg: #ffffff !important;
+    --text-primary: #000000 !important;
+    --text-secondary: #000000 !important;
+    --border-color: transparent !important;
+}
+
+body, .container, .question-card {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
+}
+
+.question-card {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 0 40px 0 !important;
+    border-radius: 0 !important;
+    border-bottom: 1px solid #e0e0e0 !important;
+    margin-bottom: 30px !important;
+}
+
+/* Hide colorful badges */
+.badge-topic, .badge-subtopic, .badge-type {
+    display: none !important;
+}
+
+/* Format index badge as 'Question X' if possible */
+.badge-index {
+    background: transparent !important;
+    color: #000000 !important;
+    font-weight: bold !important;
+    font-size: 1.1rem !important;
+    padding: 0 !important;
+    border: none !important;
+    margin-bottom: 10px !important;
+    display: block !important;
+}
+
+.card-top-bar {
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 10px !important;
+}
+
+.question-text, .question-title {
+    font-size: 1.05rem !important;
+    font-weight: normal !important;
+    color: #000000 !important;
+    margin-bottom: 20px !important;
+    line-height: 1.5 !important;
+}
+
+/* Strip complex option styling */
+.option-label {
+    background: transparent !important;
+    border: none !important;
+    padding: 4px 0 !important;
+    margin-bottom: 8px !important;
+    gap: 12px !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    border-radius: 0 !important;
+}
+
+.option-label:hover {
+    background: transparent !important;
+    border: none !important;
+}
+
+/* Restore native radio/checkbox look */
+.option-label input[type="radio"], .option-label input[type="checkbox"] {
+    appearance: auto !important;
+    -webkit-appearance: auto !important;
+    width: 16px !important;
+    height: 16px !important;
+    margin-top: 3px !important;
+    accent-color: #0073bb !important;
+    cursor: pointer !important;
+}
+
+.opt-text, .option-item span {
+    font-size: 1rem !important;
+    color: #000000 !important;
+    font-weight: normal !important;
+}
+
+/* Submit button */
+.btn-submit {
+    background-color: #0073bb !important;
+    color: #ffffff !important;
+    border-radius: 2px !important;
+    border: none !important;
+    font-weight: normal !important;
+    padding: 8px 16px !important;
+    box-shadow: none !important;
+    text-transform: none !important;
+}
+.btn-submit:hover {
+    background-color: #005f99 !important;
+}
+
+/* Header */
+.sticky-header {
+    background: #ffffff !important;
+    border-bottom: 2px solid #333333 !important;
+    box-shadow: none !important;
+}
+
+.brand-title h1 {
+    color: #000000 !important;
+}
+
+.stat-pill {
+    background: #f0f0f0 !important;
+    border: 1px solid #ccc !important;
+    color: #000000 !important;
+}
+
+/* Explanations */
+.explanation-box {
+    background: #f9f9f9 !important;
+    border: 1px solid #dddddd !important;
+    border-left: 4px solid #0073bb !important;
+    border-radius: 0 !important;
+    color: #000000 !important;
+    margin-top: 20px !important;
+}
+
+/* Lists */
+.options-group, .question-options {
+    list-style-type: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.option-item {
+    margin-bottom: 8px !important;
+}
+
+</style>
 </head>
 <body>
 
@@ -3715,7 +3869,7 @@
                 <div class="question-card" id="card-${q.id}" data-id="${q.id}" data-type="${isMulti ? 'multi' : 'single'}" data-req="${reqCount}" data-status="unanswered" data-starred="${isStarred ? 'true' : 'false'}">
                     <div class="question-header">
                         <div class="question-title">
-                            ${index + 1}. ${q.question}
+                            <div style="font-weight:bold; margin-bottom:10px;">Question ${index + 1}</div>${q.question}
                             ${isMulti ? `<span style="color: var(--accent-orange); font-weight: 700; margin-left: 8px;">(Select ${reqCount} options)</span>` : ''}
                             <button class="star-btn ${isStarred ? 'starred' : ''}" onclick="toggleStar(${q.id}, event)" title="${isStarred ? 'Unstar Question' : 'Star Question'}">${isStarred ? '⭐' : '☆'}</button>
                         </div>
@@ -3731,7 +3885,7 @@
                     <li class="option-item">
                         <label class="option-label" onclick="selectOption(this)">
                             <input type="${inputType}" name="question-${q.id}" value="${optLetter}">
-                            <span>${opt}</span>
+                            <span>${opt.replace(/^[A-Z]\)\\s*/, "")}</span>
                         </label>
                     </li>
                 `;
@@ -3965,7 +4119,7 @@
                     <li class="option-item">
                         <label class="option-label ${isChecked ? 'selected-opt' : ''}" onclick="handleExamOptionClick(this, ${q.id}, '${optLetter}', ${isMulti}, ${reqCount})">
                             <input type="${inputType}" name="exam_q_${q.id}" value="${optLetter}" ${isChecked ? 'checked' : ''}>
-                            <span>${opt}</span>
+                            <span>${opt.replace(/^[A-Z]\)\\s*/, "")}</span>
                         </label>
                     </li>
                 `;
@@ -4535,9 +4689,7 @@
             renderFocusCard();
         } else {
             // Remove focus-active class → all cards become visible again
-            document.querySelectorAll('.question-card.focus-active').forEach(function(c) {
-                c.classList.remove('focus-active');
-            });
+            document.querySelectorAll('.question-card').forEach(function(c) { c.classList.remove('focus-active'); c.style.removeProperty('display'); c.style.setProperty('display', 'none', 'important'); });
             // Scroll back to top cleanly
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -4568,9 +4720,7 @@
                 var el = document.getElementById(id);
                 if (el) el.textContent = '0';
             });
-            document.querySelectorAll('.question-card.focus-active').forEach(function(c) {
-                c.classList.remove('focus-active');
-            });
+            document.querySelectorAll('.question-card').forEach(function(c) { c.classList.remove('focus-active'); c.style.removeProperty('display'); c.style.setProperty('display', 'none', 'important'); });
             return;
         }
 
@@ -4579,15 +4729,13 @@
         if (focusIndex < 0) focusIndex = 0;
 
         // Remove old active
-        document.querySelectorAll('.question-card.focus-active').forEach(function(c) {
-            c.classList.remove('focus-active');
-        });
+        document.querySelectorAll('.question-card').forEach(function(c) { c.classList.remove('focus-active'); c.style.removeProperty('display'); c.style.setProperty('display', 'none', 'important'); });
 
         // Activate current
         var q = filteredData[focusIndex];
         var card = document.getElementById('card-' + q.id);
         if (card) {
-            card.classList.add('focus-active');
+            card.classList.add('focus-active'); card.style.setProperty('display', 'block', 'important');
             // Scroll to top so user always starts reading from top of question
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -4633,16 +4781,21 @@
     // Keyboard: Left/Right = navigate questions, Up/Down = navigate options, Enter = select & submit, Escape = exit focus
     document.addEventListener('keydown', function(e) {
         if (!focusMode) return;
-        if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
         
-        if (e.key === 'ArrowRight') { e.preventDefault(); focusNav(1); }
-        if (e.key === 'ArrowLeft')  { e.preventDefault(); focusNav(-1); }
+        // Let user type in inputs (like search)
+        if (e.target && (e.target.tagName === 'INPUT' && e.target.type === 'text') || e.target.tagName === 'TEXTAREA') return;
+        
+        if (e.key === 'ArrowRight') { e.preventDefault(); focusNav(1); return; }
+        if (e.key === 'ArrowLeft')  { e.preventDefault(); focusNav(-1); return; }
+        
+        var card = document.querySelector('.question-card.focus-active');
+        if (!card) return;
+        
+        var isMulti = card.getAttribute('data-type') === 'multi';
+        var options = Array.from(card.querySelectorAll('.option-label'));
         
         if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
             e.preventDefault();
-            var card = document.querySelector('.question-card.focus-active');
-            if (!card) return;
-            var options = Array.from(card.querySelectorAll('.option-label'));
             if (options.length === 0) return;
             
             var currentIndex = options.findIndex(o => o.classList.contains('keyboard-focus'));
@@ -4660,30 +4813,33 @@
             
             options[nextIndex].classList.add('keyboard-focus');
             options[nextIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            
+            // Automatically select (tick) if it's a single choice question
+            if (!isMulti) {
+                var inp = options[nextIndex].querySelector('input');
+                if (inp && !inp.checked) {
+                    options[nextIndex].click();
+                }
+            }
+            return;
+        }
+        
+        if (e.key === ' ' && isMulti) {
+            // Space to toggle checkbox
+            e.preventDefault();
+            var focusedOption = card.querySelector('.option-label.keyboard-focus');
+            if (focusedOption) focusedOption.click();
+            return;
         }
         
         if (e.key === 'Enter') {
             e.preventDefault();
-            var card = document.querySelector('.question-card.focus-active');
-            if (!card) return;
-            
-            var focusedOption = card.querySelector('.option-label.keyboard-focus');
-            if (focusedOption) {
-                focusedOption.click();
-                var submitBtn = card.querySelector('.submit-btn');
-                if (submitBtn) {
-                    setTimeout(function() {
-                        var req = parseInt(card.getAttribute('data-req') || '1');
-                        var selectedCount = card.querySelectorAll('.option-label.selected-opt').length;
-                        if (selectedCount === req) {
-                            submitBtn.click();
-                        }
-                    }, 50);
-                }
-            } else {
-                var submitBtn = card.querySelector('.submit-btn');
-                if (submitBtn) submitBtn.click();
+            // Just submit!
+            var submitBtn = card.querySelector('.btn-submit') || card.querySelector('.submit-btn');
+            if (submitBtn) {
+                submitBtn.click();
             }
+            return;
         }
         
         if (e.key === 'Escape') { if (focusMode) toggleFocusMode(); }

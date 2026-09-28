@@ -10643,6 +10643,7 @@ function loadQuizData(quizKeyOrData, customTitle, customDesc) {
         }
     }
 
+    questions.forEach((q, idx) => { q._uid = 'uid_' + idx; q._seq = idx + 1; });
     activeQuizData = questions;
 
     const titleEl = document.getElementById('quiz-intro-title') || document.getElementById('quiz-title');
@@ -10736,7 +10737,7 @@ function renderQuizGroupedBySection(questions) {
 
         const card = document.createElement('div');
         card.className = 'question-card';
-        card.id = `card-${q.id}`;
+        card.id = `card-${q._uid || q.id}`;
         card.setAttribute('data-id', q.id);
         card.setAttribute('data-type', q.type || 'single');
         card.setAttribute('data-status', 'unanswered');
@@ -10759,7 +10760,7 @@ function renderQuizGroupedBySection(questions) {
         card.innerHTML = `
             <div class="card-top-bar">
                 <div class="badge-group">
-                    <span class="badge badge-index">#${q.id}</span>
+                    <span class="badge badge-index">Question ${q._seq || q.id}</span>
                     <span class="badge badge-topic">${escapeHTML(q.topic || 'AWS')}</span>
                     <span class="badge badge-subtopic">${escapeHTML(q.subtopic || 'General')}</span>
                     <span class="badge badge-type ${q.type || 'single'}">${isMulti ? 'Multi-Select' : 'Single Choice'}</span>
@@ -10772,6 +10773,7 @@ function renderQuizGroupedBySection(questions) {
             </div>
 
             <div class="question-text">
+                <div style="font-size: 0.85rem; color: #666; margin-bottom: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">Domain: ${escapeHTML(q.topic || \'AWS\')}</div>
                 ${escapeHTML(q.q || q.question || "")}
                 ${isMulti ? `<span class="helper-text">(Select ${reqCount} options)</span>` : ''}
             </div>
@@ -12239,7 +12241,8 @@ function generate65QuestionMockExam() {
                 </div>
 
                 <div class="question-text">
-                    ${escapeHTML(q.q || q.question || "")}
+                    <div style="font-size: 0.85rem; color: #666; margin-bottom: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">Domain: ${escapeHTML(q.topic || \'AWS\')}</div>
+                ${escapeHTML(q.q || q.question || "")}
                     ${isMulti ? `<span class="helper-text">(Select ${reqCount} options)</span>` : ''}
                 </div>
 
@@ -12616,7 +12619,7 @@ function generate65QuestionMockExam() {
         let correctCount = 0, incorrectCount = 0;
 
         activeQuizData.forEach((q, idx) => {
-            const card = document.getElementById('card-' + q.id);
+            const card = document.getElementById('card-' + (q._uid || q.id));
             const status = card ? (card.getAttribute('data-status') || 'unanswered') : 'unanswered';
 
             if (status === 'correct') correctCount++;
@@ -12624,10 +12627,10 @@ function generate65QuestionMockExam() {
 
             const btn = document.createElement('button');
             btn.className = 'nav-q-btn status-' + status;
-            btn.title = 'Q#' + q.id + ' — ' + (q.q || q.question || '').substring(0, 60) + '...';
-            btn.textContent = q.id;
+            btn.title = 'Q#' + (q._seq || q.id) + ' — ' + (q.q || q.question || '').substring(0, 60) + '...';
+            btn.textContent = q._seq || q.id;
             btn.onclick = function() {
-                const target = document.getElementById('card-' + q.id);
+                const target = document.getElementById('card-' + (q._uid || q.id));
                 if (target) {
                     closePracticeNav();
                     setTimeout(() => {
@@ -12857,9 +12860,7 @@ function generate65QuestionMockExam() {
             renderFocusCard();
         } else {
             // Remove focus-active class → all cards become visible again
-            document.querySelectorAll('.question-card.focus-active').forEach(function(c) {
-                c.classList.remove('focus-active');
-            });
+            document.querySelectorAll('.question-card').forEach(function(c) { c.classList.remove('focus-active'); c.style.removeProperty('display'); c.style.setProperty('display', 'none', 'important'); });
             // Scroll back to top cleanly
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -12873,7 +12874,7 @@ function generate65QuestionMockExam() {
 
     function _getFilteredData(data) {
         return (data || _getFocusData()).filter(function(q) {
-            var card = document.getElementById('card-' + q.id);
+            var card = document.getElementById('card-' + (q._uid || q.id));
             return card && !card.classList.contains('hidden');
         });
     }
@@ -12890,9 +12891,7 @@ function generate65QuestionMockExam() {
                 var el = document.getElementById(id);
                 if (el) el.textContent = '0';
             });
-            document.querySelectorAll('.question-card.focus-active').forEach(function(c) {
-                c.classList.remove('focus-active');
-            });
+            document.querySelectorAll('.question-card').forEach(function(c) { c.classList.remove('focus-active'); c.style.removeProperty('display'); c.style.setProperty('display', 'none', 'important'); });
             return;
         }
 
@@ -12901,15 +12900,13 @@ function generate65QuestionMockExam() {
         if (focusIndex < 0) focusIndex = 0;
 
         // Remove old active
-        document.querySelectorAll('.question-card.focus-active').forEach(function(c) {
-            c.classList.remove('focus-active');
-        });
+        document.querySelectorAll('.question-card').forEach(function(c) { c.classList.remove('focus-active'); c.style.removeProperty('display'); c.style.setProperty('display', 'none', 'important'); });
 
         // Activate current
         var q = filteredData[focusIndex];
-        var card = document.getElementById('card-' + q.id);
+        var card = document.getElementById('card-' + (q._uid || q.id));
         if (card) {
-            card.classList.add('focus-active');
+            card.classList.add('focus-active'); card.style.setProperty('display', 'block', 'important');
             // Scroll to top so user always starts reading from top of question
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
