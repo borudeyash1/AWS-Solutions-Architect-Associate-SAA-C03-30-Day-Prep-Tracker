@@ -10667,7 +10667,7 @@ function renderQuizGroupedBySection(questions) {
                 const inputType = isMulti ? 'checkbox' : 'radio';
                 optionsHTML += `
                     <label class="option-label" onclick="handleOptionClick(this)">
-                        <input type="${inputType}" name="q_${q.id}" value="${letter}">
+                        <input type="${inputType}" name="q_${q._uid || q.id}" value="${letter}">
                         <span class="opt-text">${escapeHTML(opt.replace(/^[A-Z]\)\\s*/, ""))}</span>
                     </label>
                 `;
@@ -10700,12 +10700,12 @@ function renderQuizGroupedBySection(questions) {
             </div>
 
             <div class="card-footer">
-                <button class="btn-submit" onclick="submitAnswer(${q.id})">
+                <button class="btn-submit" onclick="submitAnswer('${q._uid || q.id}')">
                     Submit Answer
                 </button>
             </div>
 
-            <div id="explanation-${q.id}" class="explanation-box"></div>
+            <div id="explanation-${q._uid || q.id}" class="explanation-box"></div>
             <div class="card-watermark">
     🔗 <a href="https://github.com/borudeyash1/AWS-Solutions-Architect-Associate-SAA-C03-30-Day-Prep-Tracker" target="_blank" rel="noopener noreferrer">github.com/borudeyash1/AWS-Solutions-Architect-Associate-SAA-C03-30-Day-Prep-Tracker</a>
 </div>
@@ -10741,6 +10741,8 @@ function renderQuizGroupedBySection(questions) {
         if (!isMulti) {
             card.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected-opt'));
             labelEl.classList.add('selected-opt');
+            const inp = labelEl.querySelector('input[type="radio"]');
+            if (inp) inp.checked = true;
         } else {
             const chk = labelEl.querySelector('input[type="checkbox"]');
             const checkedCount = card.querySelectorAll('input[type="checkbox"]:checked').length;
@@ -10759,97 +10761,113 @@ function renderQuizGroupedBySection(questions) {
     }
 
     function submitAnswer(qId) {
-        const card = document.getElementById(`card-${qId}`);
-        if (!card) return;
+        try {
+            const qObj = activeQuizData.find(item => item._uid === qId || item.id == qId);
+            if (!qObj) {
+                alert(`Debug: Question object not found for id ${qId}`);
+                return;
+            }
 
-        const qObj = activeQuizData.find(item => item.id == qId);
-        if (!qObj) return;
+            const cardIdStr = `card-${qObj._uid || qObj.id}`;
+            const card = document.getElementById(cardIdStr) || document.querySelector(`.question-card[data-id="${qId}"]`);
+            if (!card) {
+                alert(`Debug: Card not found for ${cardIdStr}`);
+                return;
+            }
 
-        const isMulti = qObj.type === 'multi';
-        let reqCount = 1;
-        if (isMulti) {
-            if (Array.isArray((qObj.answer || qObj.correct) || qObj.correct)) {
-                reqCount = (qObj.answer || qObj.correct).length;
-            } else if ((qObj.q || qObj.question || "").toLowerCase().includes("select 3")) {
-                reqCount = 3;
+            const isMulti = qObj.type === 'multi';
+            let reqCount = 1;
+            if (isMulti) {
+                if (Array.isArray((qObj.answer || qObj.correct) || qObj.correct)) {
+                    reqCount = (qObj.answer || qObj.correct).length;
+                } else if ((qObj.q || qObj.question || "").toLowerCase().includes("select 3")) {
+                    reqCount = 3;
+                } else {
+                    reqCount = 2;
+                }
+            }
+
+            const inputs = card.querySelectorAll(`input[name="q_${qId}"]:checked`);
+
+            if (inputs.length === 0) {
+                const allInputs = card.querySelectorAll('input');
+                const states = Array.from(allInputs).map(i => `${i.name}(${i.type}):${i.checked}`).join(', ');
+                alert(`Debug: Expected name=q_${qId}. Found inputs: ${states}`);
+                return;
+            }
+
+            if (isMulti && inputs.length !== reqCount) {
+                alert(`Please select exactly ${reqCount} options before submitting!`);
+                return;
+            }
+
+            const selectedVals = Array.from(inputs).map(i => i.value);
+            let isCorrect = false;
+
+            if (!isMulti) {
+                const userVal = selectedVals[0];
+                const correctVal = typeof (qObj.answer || qObj.correct) === 'string' ? (qObj.answer || qObj.correct) : (qObj.answer || qObj.correct)[0];
+                isCorrect = (userVal === correctVal);
             } else {
-                reqCount = 2;
+                const correctArray = Array.isArray((qObj.answer || qObj.correct) || qObj.correct) ? (qObj.answer || qObj.correct) : [(qObj.answer || qObj.correct)];
+                isCorrect = (selectedVals.length === correctArray.length) && selectedVals.every(val => correctArray.includes(val));
             }
-        }
 
-        const inputs = card.querySelectorAll(`input[name="q_${qId}"]:checked`);
+            // Highlight options
+            const labels = card.querySelectorAll('.option-label');
+            labels.forEach(label => {
+                label.classList.remove('opt-correct', 'opt-incorrect');
+                const input = label.querySelector('input');
+                const val = input ? input.value : '';
 
-        if (inputs.length === 0) {
-            alert('Please select an option before submitting!');
-            return;
-        }
+                const correctArray = Array.isArray((qObj.answer || qObj.correct) || qObj.correct) ? (qObj.answer || qObj.correct) : [(qObj.answer || qObj.correct)];
 
-        if (isMulti && inputs.length !== reqCount) {
-            alert(`Please select exactly ${reqCount} options before submitting!`);
-            return;
-        }
+                if (correctArray.includes(val)) {
+                    label.classList.add('opt-correct');
+                }
+                if (selectedVals.includes(val) && !correctArray.includes(val)) {
+                    label.classList.add('opt-incorrect');
+                }
+            });
 
-        const selectedVals = Array.from(inputs).map(i => i.value);
-        let isCorrect = false;
+            // Display explanation & update card status
+            const expBox = document.getElementById(`explanation-${qId}`);
+            if (expBox) {
+                expBox.style.display = 'block';
+                const expText = qObj.explanation || qObj.exp || qObj.expl || '';
 
-        if (!isMulti) {
-            const userVal = selectedVals[0];
-            const correctVal = typeof (qObj.answer || qObj.correct) === 'string' ? (qObj.answer || qObj.correct) : (qObj.answer || qObj.correct)[0];
-            isCorrect = (userVal === correctVal);
-        } else {
-            const correctArray = Array.isArray((qObj.answer || qObj.correct) || qObj.correct) ? (qObj.answer || qObj.correct) : [(qObj.answer || qObj.correct)];
-            isCorrect = (selectedVals.length === correctArray.length) && selectedVals.every(val => correctArray.includes(val));
-        }
-
-        // Highlight options
-        const labels = card.querySelectorAll('.option-label');
-        labels.forEach(label => {
-            label.classList.remove('opt-correct', 'opt-incorrect');
-            const input = label.querySelector('input');
-            const val = input ? input.value : '';
-
-            const correctArray = Array.isArray((qObj.answer || qObj.correct) || qObj.correct) ? (qObj.answer || qObj.correct) : [(qObj.answer || qObj.correct)];
-
-            if (correctArray.includes(val)) {
-                label.classList.add('opt-correct');
+                if (isCorrect) {
+                    expBox.className = 'explanation-box correct-ans';
+                    expBox.innerHTML = `<strong>Correct!</strong>${expText ? '<br><br>' + escapeHTML(expText) : ' Great job!'}`;
+                    card.setAttribute('data-status', 'correct');
+                } else {
+                    expBox.className = 'explanation-box incorrect-ans';
+                    const correctStr = Array.isArray((qObj.answer || qObj.correct) || qObj.correct) ? (qObj.answer || qObj.correct).join(', ') : (qObj.answer || qObj.correct);
+                    expBox.innerHTML = `<strong>Incorrect.</strong> Correct answer is <strong>${escapeHTML(correctStr)}</strong>.${expText ? '<br><br>' + escapeHTML(expText) : ''}`;
+                    card.setAttribute('data-status', 'incorrect');
+                }
             }
-            if (selectedVals.includes(val) && !correctArray.includes(val)) {
-                label.classList.add('opt-incorrect');
+
+            updateStats();
+
+            // Lock options to prevent re-selection after submit
+            card.querySelectorAll('.option-label').forEach(function(lbl) {
+                lbl.style.pointerEvents = 'none';
+                lbl.style.cursor = 'default';
+            });
+            var submitBtn = card.querySelector('.btn-submit');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.style.opacity = '0.5';
+                submitBtn.style.cursor = 'not-allowed';
             }
-        });
 
-        // Display explanation & update card status
-        const expBox = document.getElementById(`explanation-${qId}`);
-        expBox.style.display = 'block';
-        const expText = qObj.explanation || qObj.exp || qObj.expl || '';
-
-        if (isCorrect) {
-            expBox.className = 'explanation-box correct-ans';
-            expBox.innerHTML = `<strong>Correct!</strong>${expText ? '<br><br>' + escapeHTML(expText) : ' Great job!'}`;
-            card.setAttribute('data-status', 'correct');
-        } else {
-            expBox.className = 'explanation-box incorrect-ans';
-            const correctStr = Array.isArray((qObj.answer || qObj.correct) || qObj.correct) ? (qObj.answer || qObj.correct).join(', ') : (qObj.answer || qObj.correct);
-            expBox.innerHTML = `<strong>Incorrect.</strong> Correct answer is <strong>${escapeHTML(correctStr)}</strong>.${expText ? '<br><br>' + escapeHTML(expText) : ''}`;
-            card.setAttribute('data-status', 'incorrect');
+            // Refresh question navigator
+            setTimeout(function() { if (typeof renderPracticeNavGrid === 'function') renderPracticeNavGrid(); }, 200);
+        } catch (e) {
+            alert('Debug Error in submitAnswer: ' + e.message + '\n' + e.stack);
+            console.error(e);
         }
-
-        updateStats();
-
-        // Lock options to prevent re-selection after submit
-        card.querySelectorAll('.option-label').forEach(function(lbl) {
-            lbl.style.pointerEvents = 'none';
-            lbl.style.cursor = 'default';
-        });
-        var submitBtn = card.querySelector('.btn-submit');
-        if (submitBtn) {
-            submitBtn.disabled = true;
-            submitBtn.style.opacity = '0.5';
-            submitBtn.style.cursor = 'not-allowed';
-        }
-
-        // Refresh question navigator
-        setTimeout(function() { if (typeof renderPracticeNavGrid === 'function') renderPracticeNavGrid(); }, 200);
     }
 
     let currentFilter = 'all';
@@ -11022,13 +11040,24 @@ function renderQuizGroupedBySection(questions) {
         const timerBox = document.getElementById('exam-timer-box');
         const introBox = document.getElementById('quiz-intro-box');
         const quizSelect = document.getElementById('quiz-select');
+        
+        const brandTitle = document.querySelector('.brand-title');
+        const modeToggleBox = document.querySelector('.mode-toggle-group');
+        const themeBtn = document.getElementById('theme-toggle-btn');
+        const guidanceBanner = document.querySelector('.guidance-banner');
 
         if (mode === 'exam') {
             if (toolbar) toolbar.style.display = 'none';
             if (statPill) statPill.style.display = 'none';
             if (timerBox) timerBox.style.display = 'inline-flex';
             if (introBox) introBox.style.display = 'none';
-            if (quizSelect) quizSelect.style.display = 'inline-block';
+            if (quizSelect) quizSelect.style.display = 'none';
+            
+            if (brandTitle) brandTitle.style.display = 'none';
+            if (modeToggleBox) modeToggleBox.style.display = 'none';
+            if (themeBtn) themeBtn.style.display = 'none';
+            if (guidanceBanner) guidanceBanner.style.display = 'none';
+            
             initExamMode();
         } else if (mode === 'history') {
             stopExamTimer();
@@ -11037,6 +11066,12 @@ function renderQuizGroupedBySection(questions) {
             if (timerBox) timerBox.style.display = 'none';
             if (introBox) introBox.style.display = 'none';
             if (quizSelect) quizSelect.style.display = 'none';
+            
+            if (brandTitle) brandTitle.style.display = 'flex';
+            if (modeToggleBox) modeToggleBox.style.display = 'flex';
+            if (themeBtn) themeBtn.style.display = 'flex';
+            if (guidanceBanner) guidanceBanner.style.display = 'none';
+            
             renderExamHistoryDashboard();
         } else {
             stopExamTimer();
@@ -11045,6 +11080,12 @@ function renderQuizGroupedBySection(questions) {
             if (timerBox) timerBox.style.display = 'none';
             if (introBox) introBox.style.display = 'block';
             if (quizSelect) quizSelect.style.display = 'inline-block';
+            
+            if (brandTitle) brandTitle.style.display = 'flex';
+            if (modeToggleBox) modeToggleBox.style.display = 'flex';
+            if (themeBtn) themeBtn.style.display = 'flex';
+            if (guidanceBanner) guidanceBanner.style.display = 'flex';
+            
             changeQuiz(document.getElementById('quiz-select').value || 'quiz1');
         }
     }
