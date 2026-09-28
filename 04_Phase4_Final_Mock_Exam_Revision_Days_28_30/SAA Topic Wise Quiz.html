@@ -19138,12 +19138,62 @@ function renderQuizGroupedBySection(questions) {
         }
     })();
 
-    // Keyboard: arrows = navigate, Escape = exit focus
+    // Keyboard: Left/Right = navigate questions, Up/Down = navigate options, Enter = select & submit, Escape = exit focus
     document.addEventListener('keydown', function(e) {
         if (!focusMode) return;
         if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
-        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); focusNav(1); }
-        if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { e.preventDefault(); focusNav(-1); }
+        
+        if (e.key === 'ArrowRight') { e.preventDefault(); focusNav(1); }
+        if (e.key === 'ArrowLeft')  { e.preventDefault(); focusNav(-1); }
+        
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            var card = document.querySelector('.question-card.focus-active');
+            if (!card) return;
+            var options = Array.from(card.querySelectorAll('.option-label'));
+            if (options.length === 0) return;
+            
+            var currentIndex = options.findIndex(o => o.classList.contains('keyboard-focus'));
+            if (currentIndex > -1) options[currentIndex].classList.remove('keyboard-focus');
+            
+            var dir = e.key === 'ArrowDown' ? 1 : -1;
+            var nextIndex = currentIndex + dir;
+            
+            if (currentIndex === -1) {
+                nextIndex = e.key === 'ArrowDown' ? 0 : options.length - 1;
+            } else {
+                if (nextIndex < 0) nextIndex = options.length - 1;
+                if (nextIndex >= options.length) nextIndex = 0;
+            }
+            
+            options[nextIndex].classList.add('keyboard-focus');
+            options[nextIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            var card = document.querySelector('.question-card.focus-active');
+            if (!card) return;
+            
+            var focusedOption = card.querySelector('.option-label.keyboard-focus');
+            if (focusedOption) {
+                focusedOption.click();
+                var submitBtn = card.querySelector('.submit-btn');
+                if (submitBtn) {
+                    setTimeout(function() {
+                        var req = parseInt(card.getAttribute('data-req') || '1');
+                        var selectedCount = card.querySelectorAll('.option-label.selected-opt').length;
+                        if (selectedCount === req) {
+                            submitBtn.click();
+                        }
+                    }, 50);
+                }
+            } else {
+                var submitBtn = card.querySelector('.submit-btn');
+                if (submitBtn) submitBtn.click();
+            }
+        }
+        
         if (e.key === 'Escape') { if (focusMode) toggleFocusMode(); }
     });
     // ======================== END FOCUS MODE ENGINE ========================
@@ -19199,7 +19249,7 @@ function renderQuizGroupedBySection(questions) {
 <button id="focus-prev-float" onclick="focusNav(-1)" title="Previous Question (&#8592;)">&#8592;</button>
 <button id="focus-next-float" onclick="focusNav(1)"  title="Next Question (&#8594;)">&#8594;</button>
 
-<div id="focus-key-hint">&#8592; &#8594; arrow keys to navigate &nbsp;|&nbsp; Esc to exit focus</div>
+<div id="focus-key-hint">&#8592; &#8594; Questions | &#8593; &#8595; Options | Enter to submit | Esc to exit</div>
 
 </body>
 </html>
