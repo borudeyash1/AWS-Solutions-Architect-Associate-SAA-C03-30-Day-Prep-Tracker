@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AWS Solutions Architect Associate (SAA-C03) Quiz Master</title>
+    <title>AWS Solutions Architect Associate (SAA-C03) - Design Master Quiz</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -1581,6 +1581,160 @@
     body.focus-mode #focus-key-hint { display: block; }
 
     
+        /* Focus Mode Collapse Fix */
+        .focus-mode .section-header {
+            display: none !important;
+        }
+        .focus-mode .section-questions {
+            display: block !important;
+        }
+
+/* ====================================================
+   PEARSON VUE EXAM UI THEME (Overrides all defaults)
+   ==================================================== */
+:root {
+    --bg-color: #ffffff !important;
+    --card-bg: #ffffff !important;
+    --card-sub-bg: #ffffff !important;
+    --text-primary: #000000 !important;
+    --text-secondary: #000000 !important;
+    --border-color: transparent !important;
+}
+
+body, .container, .question-card {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif !important;
+}
+
+.question-card {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 0 40px 0 !important;
+    border-radius: 0 !important;
+    border-bottom: 1px solid #e0e0e0 !important;
+    margin-bottom: 30px !important;
+}
+
+/* Hide colorful badges */
+.badge-topic, .badge-subtopic, .badge-type {
+    display: none !important;
+}
+
+/* Format index badge as 'Question X' if possible */
+.badge-index {
+    background: transparent !important;
+    color: #000000 !important;
+    font-weight: bold !important;
+    font-size: 1.1rem !important;
+    padding: 0 !important;
+    border: none !important;
+    margin-bottom: 10px !important;
+    display: block !important;
+}
+
+.card-top-bar {
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 10px !important;
+}
+
+.question-text, .question-title {
+    font-size: 1.05rem !important;
+    font-weight: normal !important;
+    color: #000000 !important;
+    margin-bottom: 20px !important;
+    line-height: 1.5 !important;
+}
+
+/* Strip complex option styling */
+.option-label {
+    background: transparent !important;
+    border: none !important;
+    padding: 4px 0 !important;
+    margin-bottom: 8px !important;
+    gap: 12px !important;
+    display: flex !important;
+    align-items: flex-start !important;
+    border-radius: 0 !important;
+}
+
+.option-label:hover {
+    background: transparent !important;
+    border: none !important;
+}
+
+/* Restore native radio/checkbox look */
+.option-label input[type="radio"], .option-label input[type="checkbox"] {
+    appearance: auto !important;
+    -webkit-appearance: auto !important;
+    width: 16px !important;
+    height: 16px !important;
+    margin-top: 3px !important;
+    accent-color: #0073bb !important;
+    cursor: pointer !important;
+}
+
+.opt-text, .option-item span {
+    font-size: 1rem !important;
+    color: #000000 !important;
+    font-weight: normal !important;
+}
+
+/* Submit button */
+.btn-submit {
+    background-color: #0073bb !important;
+    color: #ffffff !important;
+    border-radius: 2px !important;
+    border: none !important;
+    font-weight: normal !important;
+    padding: 8px 16px !important;
+    box-shadow: none !important;
+    text-transform: none !important;
+}
+.btn-submit:hover {
+    background-color: #005f99 !important;
+}
+
+/* Header */
+.sticky-header {
+    background: #ffffff !important;
+    border-bottom: 2px solid #333333 !important;
+    box-shadow: none !important;
+}
+
+.brand-title h1 {
+    color: #000000 !important;
+}
+
+.stat-pill {
+    background: #f0f0f0 !important;
+    border: 1px solid #ccc !important;
+    color: #000000 !important;
+}
+
+/* Explanations */
+.explanation-box {
+    background: #f9f9f9 !important;
+    border: 1px solid #dddddd !important;
+    border-left: 4px solid #0073bb !important;
+    border-radius: 0 !important;
+    color: #000000 !important;
+    margin-top: 20px !important;
+}
+
+/* Lists */
+.options-group, .question-options {
+    list-style-type: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.option-item {
+    margin-bottom: 8px !important;
+}
+
+
         /* Keyboard Navigation Focus Highlighting Rule */
         .option-label.keyboard-focus {
             outline: 2.5px solid var(--aws-orange, #ff9900) !important;
@@ -1591,6 +1745,7 @@
             transform: translateX(4px) !important;
             transition: all 0.15s ease-in-out !important;
         }
+
         /* Lock & Freeze Submitted Question Options */
         .question-card.submitted .option-label,
         .question-card[data-status="answered"] .option-label {
@@ -1639,12 +1794,16 @@
 </header>
 
 <!-- Study Guidance Note -->
-<div class="guidance-banner" style="background: linear-gradient(135deg, rgba(255, 153, 0, 0.1), rgba(234, 88, 12, 0.15)); border: 1px solid var(--accent-orange); border-radius: 12px; padding: 14px 20px; margin: 15px auto 5px auto; max-width: 1200px; color: var(--text-primary); font-size: 0.92rem; line-height: 1.5; display: flex; align-items: flex-start; gap: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
-    <span style="font-size: 1.5rem; line-height: 1;">💡</span>
+
+<!-- Design Guidance Note -->
+<div class="guidance-banner" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(16, 185, 129, 0.12)); border: 1px solid #3b82f6; border-radius: 12px; padding: 14px 20px; margin: 15px auto 5px auto; max-width: 1200px; color: var(--text-primary); font-size: 0.92rem; line-height: 1.5; display: flex; align-items: flex-start; gap: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+    <span style="font-size: 1.5rem; line-height: 1;">🎯</span>
     <div>
-        <strong style="color: var(--accent-orange); font-size: 1rem;">Study Guidance Note:</strong>
-        <span style="display: block; margin-top: 4px;">This topic-wise module tests your <strong>factual and theoretical knowledge</strong>. It is recommended to complete these modules quickly and shift to the <strong><a href="SAA Design Master Quiz.html" style="color: var(--accent-orange); text-decoration: underline; font-weight: 700;">Design Master Quiz</a></strong> for real exam-level scenario questions (which are long and comprehensive). If you have at least 1 week left before your exam, give 2 days to solving maximum questions from this module, or shift directly to the Design questions.</span>
+        <strong style="color: #2563eb; font-size: 1rem;">Real AWS Exam Scenario Mastery:</strong>
+        <span style="display: block; margin-top: 4px;">Welcome to the <strong>SAA-C03 Master Design Quiz</strong>! This collection contains <strong>568 scenario-based design questions</strong> covering 100% of AWS exam architectural domains. All option choices are dynamically shuffled per session to eliminate position bias. Choose <strong>⚡ AWS Exam Mode</strong> for a 65-question domain-weighted mock exam!</span>
     </div>
+</div>
+
 </div>
 
 
@@ -1676,6 +1835,7 @@
 </div>
 
 <!-- Main Quiz Container -->
+
 <div class="container">
     <div class="quiz-intro" id="quiz-intro-box">
         <div class="quiz-intro-header">
@@ -1687,6 +1847,7 @@
 
     <div id="quiz-content"></div>
 </div>
+
 
 
 
@@ -18201,7 +18362,8 @@ const EMBEDDED_META = [
         "desc": "S3, EBS, EFS, FSx, AWS Backup, Storage Gateway"
     }
 ];
-    var currentQuizKey = 'quiz1';
+    
+var currentQuizKey = 'quiz1';
 
     // Theme Management
     let currentTheme = localStorage.getItem('quiz-theme') || 'light';
@@ -18231,8 +18393,10 @@ const EMBEDDED_META = [
     }
 
     // Populate Quiz Selector Dropdown
-    function initQuizSelector() {
+    
+function initQuizSelector() {
         const select = document.getElementById('quiz-select');
+        if (!select) return;
         select.innerHTML = '';
 
         // Full Exam Option
@@ -18242,6 +18406,10 @@ const EMBEDDED_META = [
         mockOpt.value = 'mock65';
         mockOpt.textContent = '🎓 65-Q Full AWS SAA-C03 Exam (Domain Weighted)';
         mockGroup.appendChild(mockOpt);
+        const allOpt = document.createElement('option');
+        allOpt.value = 'all_topics';
+        allOpt.textContent = '🏛️ All Topic-Wise Modules Combined';
+        mockGroup.appendChild(allOpt);
         select.appendChild(mockGroup);
 
         // Core Pillars Group
@@ -18250,7 +18418,8 @@ const EMBEDDED_META = [
         EMBEDDED_META.filter(item => item.category === 'pillar').forEach(item => {
             const opt = document.createElement('option');
             opt.value = item.id;
-            opt.textContent = `${item.title} (${EMBEDDED_QUIZZES[item.id] ? EMBEDDED_QUIZZES[item.id].length : 0} Qs)`;
+            const count = EMBEDDED_QUIZZES[item.id] ? EMBEDDED_QUIZZES[item.id].length : 0;
+            opt.textContent = `${item.title} (${count} Qs)`;
             pillarGroup.appendChild(opt);
         });
         select.appendChild(pillarGroup);
@@ -18261,11 +18430,15 @@ const EMBEDDED_META = [
         EMBEDDED_META.filter(item => item.category === 'topic').forEach(item => {
             const opt = document.createElement('option');
             opt.value = item.id;
-            opt.textContent = `${item.title} (${EMBEDDED_QUIZZES[item.id] ? EMBEDDED_QUIZZES[item.id].length : 0} Qs)`;
+            const count = EMBEDDED_QUIZZES[item.id] ? EMBEDDED_QUIZZES[item.id].length : 0;
+            opt.textContent = `${item.title} (${count} Qs)`;
             topicGroup.appendChild(opt);
         });
         select.appendChild(topicGroup);
+
+        select.value = currentQuizKey || 'all_topics';
     }
+
 
     
 
@@ -18311,6 +18484,7 @@ function loadQuizData(quizKeyOrData, customTitle, customDesc) {
         }
     }
 
+    questions.forEach((q, idx) => { q._uid = 'uid_' + idx; q._seq = idx + 1; });
     activeQuizData = questions;
 
     const titleEl = document.getElementById('quiz-intro-title') || document.getElementById('quiz-title');
@@ -18368,57 +18542,112 @@ function renderQuizGroupedBySection(questions) {
             const sectionEl = document.createElement('section');
             sectionEl.className = 'topic-section';
 
-            const headerEl = document.createElement('div');
+                        const headerEl = document.createElement('div');
             headerEl.className = 'section-header';
+            headerEl.style.cursor = 'pointer';
             headerEl.innerHTML = `
-                <h3><span>📦</span> ${escapeHTML(topicName)}</h3>
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <span class="toggle-icon" style="font-size:0.9rem; color:var(--text-secondary); transition:transform 0.2s; transform:rotate(-90deg);">▼</span>
+                    <h3><span>📦</span> ${escapeHTML(topicName)}</h3>
+                </div>
                 <span class="section-count-badge">${topicQuestions.length} Questions</span>
             `;
             sectionEl.appendChild(headerEl);
 
             const questionsWrap = document.createElement('div');
             questionsWrap.className = 'section-questions';
+            questionsWrap.style.display = 'none';
 
             topicQuestions.forEach(q => {
                 const card = createQuestionCard(q);
                 questionsWrap.appendChild(card);
             });
 
+            headerEl.onclick = function() {
+                const isHidden = questionsWrap.style.display === 'none';
+                questionsWrap.style.display = isHidden ? 'block' : 'none';
+                const icon = headerEl.querySelector('.toggle-icon');
+                if (icon) {
+                    icon.style.transform = isHidden ? 'rotate(0deg)' : 'rotate(-90deg)';
+                }
+            };
+
             sectionEl.appendChild(questionsWrap);
             container.appendChild(sectionEl);
         });
     }
 
-    function createQuestionCard(q) {
+        function getQuestionReqCount(q) {
+        if (!q) return 1;
+        if (Array.isArray(q.correct) && q.correct.length > 1) return q.correct.length;
+        if (typeof q.correct === 'string' && q.correct.includes(',')) {
+            const parts = q.correct.split(',').map(s => s.trim()).filter(Boolean);
+            if (parts.length > 1) return parts.length;
+        }
+        if (Array.isArray(q.answer) && q.answer.length > 1) return q.answer.length;
+        if (typeof q.answer === 'string' && q.answer.includes(',')) {
+            const parts = q.answer.split(',').map(s => s.trim()).filter(Boolean);
+            if (parts.length > 1) return parts.length;
+        }
+        return 1;
+    }
+
+    function isQuestionMulti(q) {
+        if (!q) return false;
+        return getQuestionReqCount(q) > 1;
+    }
+
+    
+    function updateMultiHelperText(card) {
+        if (!card) return;
+        const helperEl = card.querySelector('.helper-text');
+        if (!helperEl) return;
+        
+        const isMulti = card.getAttribute('data-type') === 'multi';
+        if (!isMulti) return;
+
+        const reqCount = parseInt(card.getAttribute('data-req') || '2');
+        const selectedCount = card.querySelectorAll('input[type="checkbox"]:checked').length;
+        const remaining = reqCount - selectedCount;
+
+        if (selectedCount === 0) {
+            helperEl.style.color = 'var(--aws-orange)';
+            helperEl.style.fontWeight = '700';
+            helperEl.textContent = `(Select ${reqCount} options)`;
+        } else if (remaining > 0) {
+            helperEl.style.color = 'var(--aws-orange)';
+            helperEl.style.fontWeight = '700';
+            helperEl.textContent = `(Select ${remaining} more ${remaining === 1 ? 'option' : 'options'})`;
+        } else {
+            helperEl.style.color = '#10b981';
+            helperEl.style.fontWeight = '800';
+            helperEl.textContent = `✓ All ${reqCount} options selected (Press Enter or Submit)`;
+        }
+    }
+function createQuestionCard(q) {
         const starredList = getStarredQuestions().map(String);
         const isStarred = starredList.includes(String(q.id));
-        const isMulti = q.type === 'multi';
-        
-        // Multi-select helper count calculation
-        let reqCount = 2;
-        if (Array.isArray((q.answer || q.correct) || q.correct)) {
-            reqCount = (q.answer || q.correct).length;
-        } else if ((q.q || q.question || "").toLowerCase().includes("select 3")) {
-            reqCount = 3;
-        }
+        const isMulti = isQuestionMulti(q);
+        const reqCount = isMulti ? getQuestionReqCount(q) : 1;
 
         const card = document.createElement('div');
         card.className = 'question-card';
-        card.id = `card-${q.id}`;
+        card.id = `card-${q._uid || q.id}`;
         card.setAttribute('data-id', q.id);
-        card.setAttribute('data-type', q.type || 'single');
+        card.setAttribute('data-type', isMulti ? 'multi' : 'single');
+        card.setAttribute('data-req', reqCount);
         card.setAttribute('data-status', 'unanswered');
 
-        // Render card options
         let optionsHTML = '';
         if (q.options && Array.isArray(q.options)) {
-            q.options.forEach(opt => {
-                const letter = extractOptionLetter(opt);
+            q.options.forEach((opt, oIdx) => {
+                const letter = String.fromCharCode(65 + oIdx);
                 const inputType = isMulti ? 'checkbox' : 'radio';
+                const cleanOpt = String(opt).replace(/^([A-Z][\.\)\:])\s*([A-Z][\.\)\:])?\s*/i, '').trim();
                 optionsHTML += `
-                    <label class="option-label" onclick="handleOptionClick(this)">
-                        <input type="${inputType}" name="q_${q.id}" value="${letter}">
-                        <span class="opt-text">${escapeHTML(opt)}</span>
+                    <label class="option-label" onclick="handleOptionClick(this, event)">
+                        <input type="${inputType}" name="q_${q._uid || q.id}" value="${letter}">
+                        <span class="opt-text"><strong>${letter})</strong> ${escapeHTML(cleanOpt)}</span>
                     </label>
                 `;
             });
@@ -18427,10 +18656,10 @@ function renderQuizGroupedBySection(questions) {
         card.innerHTML = `
             <div class="card-top-bar">
                 <div class="badge-group">
-                    <span class="badge badge-index">#${q.id}</span>
+                    <span class="badge badge-index">Question ${q._seq || q.id}</span>
                     <span class="badge badge-topic">${escapeHTML(q.topic || 'AWS')}</span>
                     <span class="badge badge-subtopic">${escapeHTML(q.subtopic || 'General')}</span>
-                    <span class="badge badge-type ${q.type || 'single'}">${isMulti ? 'Multi-Select' : 'Single Choice'}</span>
+                    <span class="badge badge-type ${isMulti ? 'multi' : 'single'}">${isMulti ? 'Multi-Select' : 'Single Choice'}</span>
                     <button class="star-btn ${isStarred ? 'starred' : ''}" onclick="toggleStar(${q.id}, event)" title="${isStarred ? 'Unstar Question' : 'Star Question'}">${isStarred ? '⭐' : '☆'}</button>
                 </div>
                 <div>
@@ -18440,6 +18669,7 @@ function renderQuizGroupedBySection(questions) {
             </div>
 
             <div class="question-text">
+                <div style="font-size: 0.85rem; color: #666; margin-bottom: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">Domain: ${escapeHTML(q.topic || 'AWS')}</div>
                 ${escapeHTML(q.q || q.question || "")}
                 ${isMulti ? `<span class="helper-text">(Select ${reqCount} options)</span>` : ''}
             </div>
@@ -18449,12 +18679,12 @@ function renderQuizGroupedBySection(questions) {
             </div>
 
             <div class="card-footer">
-                <button class="btn-submit" onclick="submitAnswer(${q.id})">
+                <button class="btn-submit" onclick="submitAnswer('${q._uid || q.id}')">
                     Submit Answer
                 </button>
             </div>
 
-            <div id="explanation-${q.id}" class="explanation-box"></div>
+            <div id="explanation-${q._uid || q.id}" class="explanation-box"></div>
             <div class="card-watermark">
     🔗 <a href="https://github.com/borudeyash1/AWS-Solutions-Architect-Associate-SAA-C03-30-Day-Prep-Tracker" target="_blank" rel="noopener noreferrer">github.com/borudeyash1/AWS-Solutions-Architect-Associate-SAA-C03-30-Day-Prep-Tracker</a>
 </div>
@@ -18469,139 +18699,115 @@ function renderQuizGroupedBySection(questions) {
         return match ? match[1].toUpperCase() : optStr.trim().charAt(0).toUpperCase();
     }
 
-    function handleOptionClick(labelEl) {
-        const card = labelEl.closest('.question-card');
+    function handleOptionClick(labelEl, event) {
+        const card = labelEl ? labelEl.closest('.question-card') : null;
         if (!card) return;
-        const isMulti = card.getAttribute('data-type') === 'multi';
-        const qId = card.getAttribute('data-id');
-        const qObj = activeQuizData ? activeQuizData.find(item => item.id == qId) : null;
-
-        let reqCount = 1;
-        if (isMulti && qObj) {
-            if (Array.isArray((qObj.answer || qObj.correct) || qObj.correct)) {
-                reqCount = (qObj.answer || qObj.correct).length;
-            } else if ((qObj.q || qObj.question || "").toLowerCase().includes("select 3")) {
-                reqCount = 3;
-            } else {
-                reqCount = 2;
-            }
+        if (card.getAttribute('data-status') === 'answered' || card.classList.contains('submitted') || card.querySelector('input:disabled')) {
+            if (event && event.preventDefault) event.preventDefault();
+            return false;
         }
+        const isMulti = card.getAttribute('data-type') === 'multi';
+        const reqCount = parseInt(card.getAttribute('data-req') || (isMulti ? '2' : '1'));
+
+        const input = labelEl.querySelector('input');
+        if (!input) return;
 
         if (!isMulti) {
             card.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected-opt'));
-            labelEl.classList.add('selected-opt');
+            if (input.checked) labelEl.classList.add('selected-opt');
         } else {
-            const chk = labelEl.querySelector('input[type="checkbox"]');
             const checkedCount = card.querySelectorAll('input[type="checkbox"]:checked').length;
             if (checkedCount > reqCount) {
-                if (chk) chk.checked = false;
+                if (input) input.checked = false;
                 labelEl.classList.remove('selected-opt');
-                alert(`You can only select ${reqCount} options for this question.`);
+                alert(`You can only select up to ${reqCount} options for this question.`);
+                if (typeof updateMultiHelperText === 'function') updateMultiHelperText(card);
                 return;
             }
-            if (chk && chk.checked) {
+            if (input.checked) {
                 labelEl.classList.add('selected-opt');
             } else {
                 labelEl.classList.remove('selected-opt');
             }
+            if (typeof updateMultiHelperText === 'function') updateMultiHelperText(card);
         }
     }
 
     function submitAnswer(qId) {
-        const card = document.getElementById(`card-${qId}`);
-        if (!card) return;
+        try {
+            const qObj = activeQuizData ? activeQuizData.find(item => item._uid === qId || item.id == qId) : null;
+            const cardIdStr = `card-${qId}`;
+            const card = document.getElementById(cardIdStr) || document.querySelector(`.question-card[data-id="${qId}"]`);
+            if (!card) {
+                alert(`Debug: Card not found for ${cardIdStr}`);
+                return;
+            }
 
-        const qObj = activeQuizData.find(item => item.id == qId);
-        if (!qObj) return;
+            const isMulti = card.getAttribute('data-type') === 'multi' || (qObj && (qObj.type === 'multi' || (Array.isArray(qObj.correct) && qObj.correct.length > 1)));
+            let reqCount = parseInt(card.getAttribute('data-req') || '1');
+            if (isMulti && reqCount < 2) {
+                reqCount = (qObj && Array.isArray(qObj.correct) && qObj.correct.length > 1) ? qObj.correct.length : 2;
+            }
 
-        const isMulti = qObj.type === 'multi';
-        let reqCount = 1;
-        if (isMulti) {
-            if (Array.isArray((qObj.answer || qObj.correct) || qObj.correct)) {
-                reqCount = (qObj.answer || qObj.correct).length;
-            } else if ((qObj.q || qObj.question || "").toLowerCase().includes("select 3")) {
-                reqCount = 3;
+            const inputs = card.querySelectorAll(`input[name="q_${qId}"]:checked`);
+
+            if (inputs.length === 0) {
+                alert(`Please select an answer before submitting!`);
+                return;
+            }
+
+            if (isMulti && inputs.length !== reqCount) {
+                alert(`Please select exactly ${reqCount} options before submitting!`);
+                return;
+            }
+
+            const selectedVals = Array.from(inputs).map(i => i.value);
+            let isCorrect = false;
+
+            const correctArray = (qObj && Array.isArray(qObj.correct)) ? qObj.correct : ((qObj && typeof qObj.correct === 'string') ? [qObj.correct] : ['A']);
+
+            if (!isMulti) {
+                const userVal = selectedVals[0];
+                const correctVal = correctArray[0];
+                isCorrect = (userVal === correctVal);
             } else {
-                reqCount = 2;
+                isCorrect = (selectedVals.length === correctArray.length) && selectedVals.every(val => correctArray.includes(val));
             }
-        }
 
-        const inputs = card.querySelectorAll(`input[name="q_${qId}"]:checked`);
+            // Highlight options
+            const labels = card.querySelectorAll('.option-label');
+            labels.forEach(label => {
+                label.classList.remove('opt-correct', 'opt-incorrect');
+                const input = label.querySelector('input');
+                const val = input ? input.value : '';
 
-        if (inputs.length === 0) {
-            alert('Please select an option before submitting!');
-            return;
-        }
+                if (correctArray.includes(val)) {
+                    label.classList.add('opt-correct');
+                } else if (selectedVals.includes(val)) {
+                    label.classList.add('opt-incorrect');
+                }
+            });
 
-        if (isMulti && inputs.length !== reqCount) {
-            alert(`Please select exactly ${reqCount} options before submitting!`);
-            return;
-        }
+            // Set card status badge
+            card.setAttribute('data-status', isCorrect ? 'correct' : 'incorrect');
 
-        const selectedVals = Array.from(inputs).map(i => i.value);
-        let isCorrect = false;
-
-        if (!isMulti) {
-            const userVal = selectedVals[0];
-            const correctVal = typeof (qObj.answer || qObj.correct) === 'string' ? (qObj.answer || qObj.correct) : (qObj.answer || qObj.correct)[0];
-            isCorrect = (userVal === correctVal);
-        } else {
-            const correctArray = Array.isArray((qObj.answer || qObj.correct) || qObj.correct) ? (qObj.answer || qObj.correct) : [(qObj.answer || qObj.correct)];
-            isCorrect = (selectedVals.length === correctArray.length) && selectedVals.every(val => correctArray.includes(val));
-        }
-
-        // Highlight options
-        const labels = card.querySelectorAll('.option-label');
-        labels.forEach(label => {
-            label.classList.remove('opt-correct', 'opt-incorrect');
-            const input = label.querySelector('input');
-            const val = input ? input.value : '';
-
-            const correctArray = Array.isArray((qObj.answer || qObj.correct) || qObj.correct) ? (qObj.answer || qObj.correct) : [(qObj.answer || qObj.correct)];
-
-            if (correctArray.includes(val)) {
-                label.classList.add('opt-correct');
+            // Render explanation box
+            const expBox = document.getElementById(`explanation-${qId}`);
+            if (expBox && qObj && qObj.explanation) {
+                expBox.style.display = 'block';
+                expBox.innerHTML = `
+                    <div style="font-weight: 700; color: ${isCorrect ? '#10b981' : '#ef4444'}; margin-bottom: 8px;">
+                        ${isCorrect ? '✓ Correct Answer!' : '✕ Incorrect Answer'}
+                    </div>
+                    <div>${escapeHTML(qObj.explanation)}</div>
+                `;
             }
-            if (selectedVals.includes(val) && !correctArray.includes(val)) {
-                label.classList.add('opt-incorrect');
-            }
-        });
 
-        // Display explanation & update card status
-        const expBox = document.getElementById(`explanation-${qId}`);
-        expBox.style.display = 'block';
-        const expText = qObj.explanation || qObj.exp || qObj.expl || '';
-
-        if (isCorrect) {
-            expBox.className = 'explanation-box correct-ans';
-            expBox.innerHTML = `<strong>Correct!</strong>${expText ? '<br><br>' + escapeHTML(expText) : ' Great job!'}`;
-            card.setAttribute('data-status', 'correct');
-        } else {
-            expBox.className = 'explanation-box incorrect-ans';
-            const correctStr = Array.isArray((qObj.answer || qObj.correct) || qObj.correct) ? (qObj.answer || qObj.correct).join(', ') : (qObj.answer || qObj.correct);
-            expBox.innerHTML = `<strong>Incorrect.</strong> Correct answer is <strong>${escapeHTML(correctStr)}</strong>.${expText ? '<br><br>' + escapeHTML(expText) : ''}`;
-            card.setAttribute('data-status', 'incorrect');
+            updateStats();
+        } catch (e) {
+            alert('Debug Error in submitAnswer: ' + e.message);
         }
-
-        updateStats();
-
-        // Lock options to prevent re-selection after submit
-        card.querySelectorAll('.option-label').forEach(function(lbl) {
-            lbl.style.pointerEvents = 'none';
-            lbl.style.cursor = 'default';
-        });
-        var submitBtn = card.querySelector('.btn-submit');
-        if (submitBtn) {
-            submitBtn.disabled = true;
-            submitBtn.style.opacity = '0.5';
-            submitBtn.style.cursor = 'not-allowed';
-        }
-
-        // Refresh question navigator
-        setTimeout(function() { if (typeof renderPracticeNavGrid === 'function') renderPracticeNavGrid(); }, 200);
     }
-
-    let currentFilter = 'all';
 
     function setFilter(filterType, btn) {
         currentFilter = filterType;
@@ -18716,7 +18922,7 @@ function renderQuizGroupedBySection(questions) {
     document.addEventListener('DOMContentLoaded', () => {
         initQuizSelector();
         // Default to Quiz 1 embedded
-        changeQuiz('quiz1');
+        changeQuiz('all_design');
         // Check if local fetch works
         // checkLocalJSONFiles disabled to prevent local file:// CORS fetch errors
     });
@@ -18771,13 +18977,24 @@ function renderQuizGroupedBySection(questions) {
         const timerBox = document.getElementById('exam-timer-box');
         const introBox = document.getElementById('quiz-intro-box');
         const quizSelect = document.getElementById('quiz-select');
+        
+        const brandTitle = document.querySelector('.brand-title');
+        const modeToggleBox = document.querySelector('.mode-toggle-group');
+        const themeBtn = document.getElementById('theme-toggle-btn');
+        const guidanceBanner = document.querySelector('.guidance-banner');
 
         if (mode === 'exam') {
             if (toolbar) toolbar.style.display = 'none';
             if (statPill) statPill.style.display = 'none';
             if (timerBox) timerBox.style.display = 'inline-flex';
             if (introBox) introBox.style.display = 'none';
-            if (quizSelect) quizSelect.style.display = 'inline-block';
+            if (quizSelect) quizSelect.style.display = 'none';
+            
+            if (brandTitle) brandTitle.style.display = 'none';
+            if (modeToggleBox) modeToggleBox.style.display = 'none';
+            if (themeBtn) themeBtn.style.display = 'none';
+            if (guidanceBanner) guidanceBanner.style.display = 'none';
+            
             initExamMode();
         } else if (mode === 'history') {
             stopExamTimer();
@@ -18786,6 +19003,12 @@ function renderQuizGroupedBySection(questions) {
             if (timerBox) timerBox.style.display = 'none';
             if (introBox) introBox.style.display = 'none';
             if (quizSelect) quizSelect.style.display = 'none';
+            
+            if (brandTitle) brandTitle.style.display = 'flex';
+            if (modeToggleBox) modeToggleBox.style.display = 'flex';
+            if (themeBtn) themeBtn.style.display = 'flex';
+            if (guidanceBanner) guidanceBanner.style.display = 'none';
+            
             renderExamHistoryDashboard();
         } else {
             stopExamTimer();
@@ -18794,6 +19017,12 @@ function renderQuizGroupedBySection(questions) {
             if (timerBox) timerBox.style.display = 'none';
             if (introBox) introBox.style.display = 'block';
             if (quizSelect) quizSelect.style.display = 'inline-block';
+            
+            if (brandTitle) brandTitle.style.display = 'flex';
+            if (modeToggleBox) modeToggleBox.style.display = 'flex';
+            if (themeBtn) themeBtn.style.display = 'flex';
+            if (guidanceBanner) guidanceBanner.style.display = 'flex';
+            
             changeQuiz(document.getElementById('quiz-select').value || 'quiz1');
         }
     }
@@ -19730,56 +19959,42 @@ function renderQuizGroupedBySection(questions) {
         });
     }
 
-    function generate65QuestionMockExam() {
-        // Gather all questions from EMBEDDED_QUIZZES
-        let allQs = [];
-        Object.keys(EMBEDDED_QUIZZES).forEach(key => {
-            allQs = allQs.concat(EMBEDDED_QUIZZES[key]);
-        });
+    
+function shuffleOptions(q) {
+    const qCopy = JSON.parse(JSON.stringify(q));
+    if (!qCopy.options || !Array.isArray(qCopy.options)) return qCopy;
+    qCopy.options = qCopy.options.map(opt => String(opt).replace(/^([A-Z][\.\)\:])\s*([A-Z][\.\)\:])?\s*/i, '').trim());
+    return qCopy;
+}
 
-        // Group into 4 AWS Domains
-        let domain1 = [], domain2 = [], domain3 = [], domain4 = [];
+function generate65QuestionMockExam() {
+    // SAA-C03 Official Domain Percentages:
+    // Domain 1: Design Secure Architectures (~30% weight -> 20 Qs) [security + governance]
+    // Domain 2: Design Resilient Architectures (~26% weight -> 17 Qs) [reliability]
+    // Domain 3: Design High-Performing Architectures (~24% weight -> 15 Qs) [performance]
+    // Domain 4: Design Cost-Optimized Architectures (~20% weight -> 13 Qs) [cost + migration]
 
-        allQs.forEach(q => {
-            const topic = (q.topic || '').toLowerCase();
-            const qtext = (q.q || q.question || "").toLowerCase();
-            if (topic.includes('lake') || topic.includes('security') || topic.includes('kms') || topic.includes('iam') || topic.includes('auth') || topic.includes('cognito') || topic.includes('guard') || topic.includes('waf') || topic.includes('shield') || topic.includes('inspector') || topic.includes('macie')) {
-                domain1.push(q); // Secure
-            } else if (topic.includes('scaling') || topic.includes('route 53') || topic.includes('vpc') || topic.includes('backup') || topic.includes('efs') || topic.includes('replication') || topic.includes('aurora global') || topic.includes('sqs') || topic.includes('sns') || topic.includes('event')) {
-                domain2.push(q); // Resilient
-            } else if (topic.includes('athena') || topic.includes('cache') || topic.includes('opensearch') || topic.includes('emr') || topic.includes('redshift') || topic.includes('kinesis') || topic.includes('direct connect') || topic.includes('cloudfront') || topic.includes('accelerator') || topic.includes('lambda') || topic.includes('fargate')) {
-                domain3.push(q); // High Performing
-            } else {
-                domain4.push(q); // Cost Optimized / General
-            }
-        });
+    const poolD1 = [].concat(EMBEDDED_QUIZZES['design_security'] || [], EMBEDDED_QUIZZES['design_governance'] || []);
+    const poolD2 = [].concat(EMBEDDED_QUIZZES['design_reliability'] || []);
+    const poolD3 = [].concat(EMBEDDED_QUIZZES['design_performance'] || []);
+    const poolD4 = [].concat(EMBEDDED_QUIZZES['design_cost'] || [], EMBEDDED_QUIZZES['design_migration'] || []);
 
-        const sample = (arr, count) => {
-            const shuffled = arr.slice().sort(() => 0.5 - Math.random());
-            return shuffled.slice(0, Math.min(count, arr.length));
-        };
-
-        let selected = []
-            .concat(sample(domain1, 20))
-            .concat(sample(domain2, 17))
-            .concat(sample(domain3, 15))
-            .concat(sample(domain4, 13));
-
-        // Fill if total less than 65
-        if (selected.length < 65) {
-            const remainingNeeded = 65 - selected.length;
-            const unused = allQs.filter(q => !selected.includes(q));
-            selected = selected.concat(sample(unused, remainingNeeded));
-        }
-
-        // Shuffle selected and re-number 1..65
-        selected.sort(() => 0.5 - Math.random());
-        return selected.map((q, idx) => {
-            const copy = JSON.parse(JSON.stringify(q));
-            copy.id = idx + 1;
-            return copy;
-        });
+    function getRandomSample(arr, n) {
+        const shuffled = [...arr].sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, n);
     }
+
+    const selD1 = getRandomSample(poolD1, 20);
+    const selD2 = getRandomSample(poolD2, 17);
+    const selD3 = getRandomSample(poolD3, 15);
+    const selD4 = getRandomSample(poolD4, 13);
+
+    let examList = [].concat(selD1, selD2, selD3, selD4);
+    examList = getRandomSample(examList, examList.length);
+
+    return examList.map(q => shuffleOptions(q));
+}
+
 
     function initExamMode() {
         const selectVal = document.getElementById('quiz-select').value;
@@ -19848,25 +20063,23 @@ function renderQuizGroupedBySection(questions) {
         if (!cardContainer || !examData[index]) return;
 
         const q = examData[index];
-        const isMulti = q.type === 'multi' || (Array.isArray((q.answer || q.correct) || q.correct) && (q.answer || q.correct).length > 1);
-        let reqCount = 1;
-        if (isMulti) {
-            reqCount = Array.isArray((q.answer || q.correct) || q.correct) ? (q.answer || q.correct).length : ((q.q || q.question || "").toLowerCase().includes("select 3") ? 3 : 2);
-        }
+        const isMulti = isQuestionMulti(q);
+        const reqCount = isMulti ? getQuestionReqCount(q) : 1;
 
         const isFlagged = !!markedForReview[q.id];
         const selected = userAnswers[q.id] || [];
 
         let optionsHTML = '';
         if (q.options && Array.isArray(q.options)) {
-            q.options.forEach(opt => {
-                const letter = extractOptionLetter(opt);
+            q.options.forEach((opt, oIdx) => {
+                const letter = String.fromCharCode(65 + oIdx);
                 const inputType = isMulti ? 'checkbox' : 'radio';
                 const isChecked = selected.includes(letter);
+                const cleanOpt = String(opt).replace(/^([A-Z][\.\)\:])\s*([A-Z][\.\)\:])?\s*/i, '').trim();
                 optionsHTML += `
-                    <label class="option-label ${isChecked ? 'selected-opt' : ''}" onclick="handleExamOptionClick(this, '${q.id}', '${letter}', ${isMulti}, ${reqCount})">
+                    <label class="option-label ${isChecked ? 'selected-opt' : ''}" onclick="handleExamOptionClick(this, event, '${q.id}', '${letter}', ${isMulti}, ${reqCount})">
                         <input type="${inputType}" name="exam_q_${q.id}" value="${letter}" ${isChecked ? 'checked' : ''}>
-                        <span class="opt-text">${escapeHTML(opt)}</span>
+                        <span class="opt-text"><strong>${letter})</strong> ${escapeHTML(cleanOpt)}</span>
                     </label>
                 `;
             });
@@ -19879,7 +20092,7 @@ function renderQuizGroupedBySection(questions) {
                         <span class="badge badge-index">Question ${index + 1} of ${examData.length}</span>
                         <span class="badge badge-topic">${escapeHTML(q.topic || 'AWS')}</span>
                         <span class="badge badge-subtopic">${escapeHTML(q.subtopic || 'General')}</span>
-                        <span class="badge badge-type ${q.type || 'single'}">${isMulti ? 'Multi-Select' : 'Single Choice'}</span>
+                        <span class="badge badge-type ${isMulti ? 'multi' : 'single'}">${isMulti ? 'Multi-Select' : 'Single Choice'}</span>
                     </div>
                     <button class="flag-btn ${isFlagged ? 'flagged' : ''}" onclick="toggleFlagQuestion('${q.id}')">
                         ${isFlagged ? '🚩 Marked for Review' : '🏳️ Mark for Review'}
@@ -19887,7 +20100,8 @@ function renderQuizGroupedBySection(questions) {
                 </div>
 
                 <div class="question-text">
-                    ${escapeHTML(q.q || q.question || "")}
+                    <div style="font-size: 0.85rem; color: #666; margin-bottom: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">Domain: ${escapeHTML(q.topic || 'AWS')}</div>
+                ${escapeHTML(q.q || q.question || "")}
                     ${isMulti ? `<span class="helper-text">(Select ${reqCount} options)</span>` : ''}
                 </div>
 
@@ -19910,7 +20124,7 @@ function renderQuizGroupedBySection(questions) {
         `;
     }
 
-    function handleExamOptionClick(labelEl, qId, letter, isMulti, reqCount) {
+    function handleExamOptionClick(labelEl, event, qId, letter, isMulti, reqCount) {
         const input = labelEl.querySelector('input');
         if (!input) return;
 
@@ -19932,7 +20146,13 @@ function renderQuizGroupedBySection(questions) {
 
             if (current.length > reqCount) {
                 input.checked = false;
-                alert(`You can only select ${reqCount} options for this question.`);
+                if (idx === -1) {
+                    const removeIdx = current.indexOf(letter);
+                    if (removeIdx !== -1) current.splice(removeIdx, 1);
+                }
+                userAnswers[qId] = current;
+                labelEl.classList.remove('selected-opt');
+                alert(`You can only select up to ${reqCount} options for this question.`);
                 return;
             }
 
@@ -19943,14 +20163,6 @@ function renderQuizGroupedBySection(questions) {
                 labelEl.classList.remove('selected-opt');
             }
         }
-
-        renderQuestionPalette();
-    }
-
-    function toggleFlagQuestion(qId) {
-        markedForReview[qId] = !markedForReview[qId];
-        renderExamCard(currentExamIndex);
-        renderQuestionPalette();
     }
 
     function navExamQuestion(delta) {
@@ -20264,7 +20476,7 @@ function renderQuizGroupedBySection(questions) {
         let correctCount = 0, incorrectCount = 0;
 
         activeQuizData.forEach((q, idx) => {
-            const card = document.getElementById('card-' + q.id);
+            const card = document.getElementById('card-' + (q._uid || q.id));
             const status = card ? (card.getAttribute('data-status') || 'unanswered') : 'unanswered';
 
             if (status === 'correct') correctCount++;
@@ -20272,10 +20484,10 @@ function renderQuizGroupedBySection(questions) {
 
             const btn = document.createElement('button');
             btn.className = 'nav-q-btn status-' + status;
-            btn.title = 'Q#' + q.id + ' — ' + (q.q || q.question || '').substring(0, 60) + '...';
-            btn.textContent = q.id;
+            btn.title = 'Q#' + (idx + 1) + ' — ' + (q.q || q.question || '').substring(0, 60) + '...';
+            btn.textContent = idx + 1;
             btn.onclick = function() {
-                const target = document.getElementById('card-' + q.id);
+                const target = document.getElementById('card-' + (q._uid || q.id));
                 if (target) {
                     closePracticeNav();
                     setTimeout(() => {
@@ -20425,8 +20637,8 @@ function renderQuizGroupedBySection(questions) {
 
             // Show actual question ID in button; grid order reflects current sequence (random/first/last)
             html += `
-                <button class="nav-q-btn ${statusClass}" onclick="scrollToQuestion('${id}')" title="Q${id} — Position ${idx + 1} in current order">
-                    ${id}
+                <button class="nav-q-btn ${statusClass}" onclick="scrollToQuestion('${id}')" title="Q${idx + 1} — Position ${idx + 1} in current order">
+                    ${idx + 1}
                     ${isStarred ? '<span class="nav-star-dot">⭐</span>' : ''}
                 </button>
             `;
@@ -20505,9 +20717,7 @@ function renderQuizGroupedBySection(questions) {
             renderFocusCard();
         } else {
             // Remove focus-active class → all cards become visible again
-            document.querySelectorAll('.question-card.focus-active').forEach(function(c) {
-                c.classList.remove('focus-active');
-            });
+            document.querySelectorAll('.question-card').forEach(function(c) { c.classList.remove('focus-active'); c.style.removeProperty('display'); c.style.setProperty('display', 'none', 'important'); });
             // Scroll back to top cleanly
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -20521,7 +20731,7 @@ function renderQuizGroupedBySection(questions) {
 
     function _getFilteredData(data) {
         return (data || _getFocusData()).filter(function(q) {
-            var card = document.getElementById('card-' + q.id);
+            var card = document.getElementById('card-' + (q._uid || q.id));
             return card && !card.classList.contains('hidden');
         });
     }
@@ -20538,9 +20748,7 @@ function renderQuizGroupedBySection(questions) {
                 var el = document.getElementById(id);
                 if (el) el.textContent = '0';
             });
-            document.querySelectorAll('.question-card.focus-active').forEach(function(c) {
-                c.classList.remove('focus-active');
-            });
+            document.querySelectorAll('.question-card').forEach(function(c) { c.classList.remove('focus-active'); c.style.removeProperty('display'); c.style.setProperty('display', 'none', 'important'); });
             return;
         }
 
@@ -20549,15 +20757,13 @@ function renderQuizGroupedBySection(questions) {
         if (focusIndex < 0) focusIndex = 0;
 
         // Remove old active
-        document.querySelectorAll('.question-card.focus-active').forEach(function(c) {
-            c.classList.remove('focus-active');
-        });
+        document.querySelectorAll('.question-card').forEach(function(c) { c.classList.remove('focus-active'); c.style.removeProperty('display'); c.style.setProperty('display', 'none', 'important'); });
 
         // Activate current
         var q = filteredData[focusIndex];
-        var card = document.getElementById('card-' + q.id);
+        var card = document.getElementById('card-' + (q._uid || q.id));
         if (card) {
-            card.classList.add('focus-active');
+            card.classList.add('focus-active'); card.style.setProperty('display', 'block', 'important');
             // Scroll to top so user always starts reading from top of question
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -20601,18 +20807,78 @@ function renderQuizGroupedBySection(questions) {
     })();
 
     // Keyboard: Left/Right = navigate questions, Up/Down = navigate options, Enter = select & submit, Escape = exit focus
+    // Keyboard Navigation: Up/Down = Navigate Options, Space = Toggle Checkbox, Enter = Submit, Left/Right = Nav Questions
+    // Keyboard Navigation: Up/Down = Navigate & Select Options, Space = Toggle Checkbox, Enter = Submit
+    // Keyboard Navigation: Up/Down = Move Focus, Space/Enter on Option = Toggle, Enter on Full = Submit
+    function getActiveQuestionCard() {
+        let card = document.querySelector('.question-card.focus-active');
+        if (card) return card;
+        card = document.querySelector('.question-card:hover');
+        if (card) return card;
+
+        const cards = Array.from(document.querySelectorAll('.question-card'));
+        if (cards.length === 0) return null;
+
+        const viewportCenter = window.innerHeight / 2;
+        let closestCard = null;
+        let minDistance = Infinity;
+
+        cards.forEach(c => {
+            const rect = c.getBoundingClientRect();
+            if (rect.bottom >= 0 && rect.top <= window.innerHeight) {
+                const cardCenter = (rect.top + rect.bottom) / 2;
+                const distance = Math.abs(cardCenter - viewportCenter);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestCard = c;
+                }
+            }
+        });
+
+        return closestCard || cards[0];
+    }
+
+    // Keyboard Navigation: Up/Down = Move Focus & Direct Check, Space = Toggle Checkbox, Enter = Submit
     document.addEventListener('keydown', function(e) {
-        if (!focusMode) return;
-        if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+        if (e.target && ((e.target.tagName === 'INPUT' && e.target.type === 'text') || e.target.tagName === 'TEXTAREA')) return;
         
-        if (e.key === 'ArrowRight') { e.preventDefault(); focusNav(1); }
-        if (e.key === 'ArrowLeft')  { e.preventDefault(); focusNav(-1); }
-        
+        var card = getActiveQuestionCard();
+        if (!card) return;
+
+        var isMulti = card.getAttribute('data-type') === 'multi';
+        var options = Array.from(card.querySelectorAll('.option-label'));
+
+        if (e.key === 'ArrowRight' && typeof focusNav === 'function' && typeof focusMode !== 'undefined' && focusMode) { e.preventDefault(); focusNav(1); return; }
+        if (e.key === 'ArrowLeft' && typeof focusNav === 'function' && typeof focusMode !== 'undefined' && focusMode)  { e.preventDefault(); focusNav(-1); return; }
+
+        // IF CARD IS ALREADY SUBMITTED: Allow arrow key navigation focus to read, but BLOCK ALL MUTATIONS & SUBMISSIONS!
+        if (card.getAttribute('data-status') === 'answered' || card.classList.contains('submitted') || card.querySelector('input:disabled')) {
+            if (e.key === ' ' || e.key === 'Spacebar' || e.key === 'Enter') {
+                e.preventDefault();
+                return;
+            }
+            if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (options.length === 0) return;
+                var currentIndex = options.findIndex(o => o.classList.contains('keyboard-focus'));
+                if (currentIndex > -1) options[currentIndex].classList.remove('keyboard-focus');
+                var dir = e.key === 'ArrowDown' ? 1 : -1;
+                var nextIndex = currentIndex + dir;
+                if (currentIndex === -1) nextIndex = e.key === 'ArrowDown' ? 0 : options.length - 1;
+                else {
+                    if (nextIndex < 0) nextIndex = options.length - 1;
+                    if (nextIndex >= options.length) nextIndex = 0;
+                }
+                var targetLabel = options[nextIndex];
+                targetLabel.classList.add('keyboard-focus');
+                targetLabel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                return;
+            }
+            return;
+        }
+
         if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
             e.preventDefault();
-            var card = document.querySelector('.question-card.focus-active');
-            if (!card) return;
-            var options = Array.from(card.querySelectorAll('.option-label'));
             if (options.length === 0) return;
             
             var currentIndex = options.findIndex(o => o.classList.contains('keyboard-focus'));
@@ -20628,37 +20894,108 @@ function renderQuizGroupedBySection(questions) {
                 if (nextIndex >= options.length) nextIndex = 0;
             }
             
-            options[nextIndex].classList.add('keyboard-focus');
-            options[nextIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-        
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            var card = document.querySelector('.question-card.focus-active');
-            if (!card) return;
+            var targetLabel = options[nextIndex];
+            targetLabel.classList.add('keyboard-focus');
+            targetLabel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             
+            var inp = targetLabel.querySelector('input');
+            if (inp) {
+                if (!isMulti) {
+                    card.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected-opt'));
+                    card.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+                    inp.checked = true;
+                    targetLabel.classList.add('selected-opt');
+                } else {
+                    // Multi-choice: Arrow keys move visible focus ring across options (A, B, C, D, E)
+                    // Selection/freezing happens when pressing Enter or Space on an option!
+                }
+            }
+            return;
+        }
+
+        if (e.key === ' ' || e.key === 'Spacebar') {
             var focusedOption = card.querySelector('.option-label.keyboard-focus');
             if (focusedOption) {
-                focusedOption.click();
-                var submitBtn = card.querySelector('.submit-btn');
-                if (submitBtn) {
-                    setTimeout(function() {
-                        var req = parseInt(card.getAttribute('data-req') || '1');
-                        var selectedCount = card.querySelectorAll('.option-label.selected-opt').length;
-                        if (selectedCount === req) {
-                            submitBtn.click();
+                e.preventDefault();
+                var inp = focusedOption.querySelector('input');
+                if (inp) {
+                    if (!isMulti) {
+                        card.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected-opt'));
+                        card.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+                        inp.checked = true;
+                        focusedOption.classList.add('selected-opt');
+                    } else {
+                        var reqCount = parseInt(card.getAttribute('data-req') || '2');
+                        var checkedInputs = Array.from(card.querySelectorAll('input[type="checkbox"]:checked'));
+                        
+                        if (inp.checked) {
+                            inp.checked = false;
+                            focusedOption.classList.remove('selected-opt');
+                        } else {
+                            if (checkedInputs.length < reqCount) {
+                                inp.checked = true;
+                                focusedOption.classList.add('selected-opt');
+                            } else {
+                                alert(`You can only select up to ${reqCount} options. Deselect an option first.`);
+                            }
                         }
-                    }, 50);
+                        if (typeof updateMultiHelperText === 'function') updateMultiHelperText(card);
+                    }
+                }
+            }
+            return;
+        }
+
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            var focusedOption = card.querySelector('.option-label.keyboard-focus');
+            
+            if (isMulti) {
+                var reqCount = parseInt(card.getAttribute('data-req') || '2');
+                var checkedInputs = Array.from(card.querySelectorAll('input[type="checkbox"]:checked'));
+
+                if (focusedOption) {
+                    var inp = focusedOption.querySelector('input');
+                    if (inp) {
+                        if (inp.checked) {
+                            if (checkedInputs.length === reqCount) {
+                                var submitBtn = card.querySelector('.btn-submit') || card.querySelector('.submit-btn');
+                                if (submitBtn) { submitBtn.click(); return; }
+                            } else {
+                                inp.checked = false;
+                                focusedOption.classList.remove('selected-opt');
+                                if (typeof updateMultiHelperText === 'function') updateMultiHelperText(card);
+                                return;
+                            }
+                        } else {
+                            if (checkedInputs.length < reqCount) {
+                                inp.checked = true;
+                                focusedOption.classList.add('selected-opt');
+                                if (typeof updateMultiHelperText === 'function') updateMultiHelperText(card);
+                                return;
+                            } else {
+                                alert(`You can only select up to ${reqCount} options. Deselect an option first.`);
+                                return;
+                            }
+                        }
+                    }
+                } else {
+                    var submitBtn = card.querySelector('.btn-submit') || card.querySelector('.submit-btn');
+                    if (submitBtn) { submitBtn.click(); return; }
                 }
             } else {
-                var submitBtn = card.querySelector('.submit-btn');
-                if (submitBtn) submitBtn.click();
+                var submitBtn = card.querySelector('.btn-submit') || card.querySelector('.submit-btn');
+                if (submitBtn) {
+                    submitBtn.click();
+                }
             }
+            return;
         }
-        
-        if (e.key === 'Escape') { if (focusMode) toggleFocusMode(); }
-    });
-    // ======================== END FOCUS MODE ENGINE ========================
+
+        if (e.key === 'Escape' && typeof focusMode !== 'undefined' && focusMode) { 
+            if (typeof toggleFocusMode === 'function') toggleFocusMode(); 
+        }
+    });  // ======================== END FOCUS MODE ENGINE ========================
 
     </script>
 
